@@ -1,9 +1,13 @@
 package MVCStuff;
 
 import java.awt.Frame;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
+
+
 
 //import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -16,6 +20,8 @@ import javax.swing.JScrollPane;
 //import javax.swing.ListModel;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
+
+
 
 //import sports.Team;
 import sports.TeamSeason;
@@ -100,8 +106,8 @@ public class SelectionView extends View {
 		this.setExtendedState(Frame.MAXIMIZED_BOTH);
 		
 		//Set the layout for the JFrame
-		this.setLayout(new GridLayout(5,3));
-		
+		this.setLayout(new GridLayout(5, 3));
+
 		//Set up the menu bar
 		setJMenuBar(new JMenuBar());
 
@@ -223,7 +229,7 @@ public class SelectionView extends View {
 		{
 			updatePersonList();
 		}
-		if (countryModel!=null&&(e.getActionCommand()==Constants.TEAM_ADDED||e.getActionCommand()==Constants.SEASON_ADDED))
+		if (countryModel!=null&&(/*e.getActionCommand()==Constants.TEAM_ADDED||*/e.getActionCommand()==Constants.SEASON_ADDED))
 		{
 			updateSeasonList();
 		}

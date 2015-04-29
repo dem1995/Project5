@@ -61,7 +61,7 @@ public class Person implements Comparable<Person>, Serializable {
 	/**
 	 * The teamSeasons this person has been a part of
 	 */
-	private HashSet<TeamSeason> teamSeasons;
+	private HashSet<TeamSeason> teamSeasons= new HashSet<TeamSeason>();
 	
 	private int age;
 	//Instance Methods~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -329,7 +329,7 @@ public class Person implements Comparable<Person>, Serializable {
 	}
 	
 	//Adder methods
-	public void AddSeason(TeamSeason teamSeason)
+	public void addSeason(TeamSeason teamSeason)
 	{
 		teamSeasons.add(teamSeason);
 	}

@@ -24,7 +24,7 @@ public class Pie extends JComponent {
 	 * The total weight of the pie (the sum of the pie's sectors' weights)
 	 */
 	private int weightSum=0;
-	
+	s
 	/**
 	 * The name of the team whose members' ages are being plotted
 	 */

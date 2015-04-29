@@ -124,6 +124,7 @@ public class TeamMateController {
         	    				}catch(Exception f)
         	    				{
         	    					System.out.println("Team loading failed");
+        	    					f.printStackTrace();
         	    				}
         					}		
         				};

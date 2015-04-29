@@ -23,7 +23,7 @@ public class DegreesofSeparationTest {
 		
 		//Put them in teams
 		SportsYear year= new SportsYear(1998);
-		TeamSeason season1= new TeamSeason("fred", "george", year);
+		TeamSeason season1= new TeamSeason();
 		TeamSeason season2= new TeamSeason("harold", "irwin", year);
 		TeamSeason season3= new TeamSeason("john", "karl", year);
 		//Put them in teams here (//TODO)

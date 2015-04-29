@@ -223,14 +223,14 @@ public class Country implements Serializable {
 		return newState;
 	}
 	
-	protected void addTeam(String ID, Team team)
+	protected void addTeam(Team team)
 	{
-		sportsStuff.addTeam(ID, team);
+		sportsStuff.addTeam(team);
 	}
 	
-	protected void addTeamSeason(String ID, TeamSeason teamSeason, int year)
+	protected void addTeamSeason(TeamSeason teamSeason)
 	{
-		sportsStuff.addTeamSeason(ID, teamSeason, year);
+		sportsStuff.addTeamSeason(teamSeason);
 	}
 	
 	/**

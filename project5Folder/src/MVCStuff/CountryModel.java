@@ -164,15 +164,15 @@ public class CountryModel extends Country {
 	
 	//Team addition methods
 	
-	public void addTeam(String ID, Team team)
+	public void addTeam(Team team)
 	{
-		super.addTeam(ID, team);
+		super.addTeam(team);
 		processEvent(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, Constants.TEAM_ADDED));
 	}
 	
-	public void addTeamSeason(String ID, TeamSeason teamSeason, int year)
+	public void addTeamSeason(TeamSeason teamSeason)
 	{
-		super.addTeamSeason(ID, teamSeason, year);
+		super.addTeamSeason(teamSeason);
 		processEvent(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, Constants.SEASON_ADDED));
 	}
 	

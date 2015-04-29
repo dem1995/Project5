@@ -1,150 +1,157 @@
 package sports;
 
-import java.io.Serializable;
-import java.util.AbstractList;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Iterator;
+import java.util.ListIterator;
 import java.util.TreeMap;
+import java.util.TreeSet;
 
-import MVCStuff.CountryModel;
-import otherClasses.HelperMethods;
-import countryComponents.DateFormatter;
+import countryComponents.City;
 import countryComponents.Person;
-import countryComponents.PersonList;
+import countryComponents.State;
+import otherClasses.HelperMethods;
+import MVCStuff.CountryModel;
 
-public class SportsStuff implements Serializable{
+public class SportsStuff {
+	//Structural components
+	private TreeMap<String, Team> teams= new TreeMap<String, Team>();
+	private TreeMap<Integer, SportsYear> sportsYears= new TreeMap<Integer, SportsYear>();
 	
-	
-	
-	/**
-	 * A HashMap where the keys are String team IDs and the values are Teams
-	 */
-	TreeMap<String, Team> teams;
-	
+	//Items for access
+	private TreeSet<TeamSeason> teamSeasons= new TreeSet<TeamSeason>();
 	
 	/**
-	 *All of the teamSeasons (for rendering to JList)
+	 * Constructor for SportsStuff
 	 */
-	ArrayList<TeamSeason> teamSeasons;
+	public SportsStuff()
+	{}
 	
-	/**
-	 * All of the SportsYears in this object
-	 */
-	TreeMap<Integer, SportsYear> sportsYears;
-	
-	
-	public SportsStuff(){
-		teams= new TreeMap<String, Team>();
-		teamSeasons=new ArrayList<TeamSeason>();
-		sportsYears=new TreeMap<Integer, SportsYear>();
-	}
-	
-	/**
-	 * Adds a team with the specified ID to the teams TreeMap
-	 * @param ID The ID of the team
-	 * @param team The team itself
-	 */
-	public void addTeam(String ID, Team team)
+	public TreeMap<String, Team> getTeams()
 	{
-		if(teams.get(ID)==null)
-			teams.put(ID, team);
+		return teams;
 	}
 	
-	public void addTeamSeason(String ID, TeamSeason teamSeason, int year)
+	public TreeMap<Integer, SportsYear> getYears()
 	{
-		teamSeasons.add(teamSeason);
+		return sportsYears;
 	}
 	
-	public static void main (String[] args)
-	{
-		SportsStuff sportsStuff= new SportsStuff();
-		try{
-		sportsStuff.prepareFromCSVUsingCountryModel("hello", new CountryModel());
-		}catch (Exception e)
-		{
-			System.out.println ("Help");
-		}
-	}
-	
-	public void prepareFromCSVUsingCountryModel(String fileName, CountryModel countryModel)
-	{
-		ArrayList<String> strings= new ArrayList<String>();
-		try{
-		strings=HelperMethods.convertCSVToStringList("teams2.csv");
-		}catch (Exception e)
-		{
-			System.out.println("Could not grab from "+fileName);
-		}
-		String ID="";
-		SportsYear sportsYear;
-		TeamSeason teamSeason;
-		
-		String name;
-		int year;
-		String cityName=new String();
-		String stateName= new String();
-		PersonList personList= new PersonList();
-		
-		for (int i=0; i<strings.size(); i++)
-		{
-			try
-			{
-			String line= strings.get(i);
-			String[] seasonParts = line.split(";");
-			year=Integer.parseInt(seasonParts[0].trim());
-			name=seasonParts[1].trim();
-			cityName=seasonParts[2].trim();
-			stateName=seasonParts[3].trim();
-			personList	= new PersonList();
-			for(int j = 4; j<seasonParts.length;j++)
-			{
-				Person tempPerson=countryModel.findPerson(seasonParts[j].trim());
-				if (tempPerson!=null)
-					personList.addPerson(tempPerson);
-				else
-				{
-					tempPerson=new Person(seasonParts[j].trim());
-					countryModel.addPerson(tempPerson);
-					personList.addPerson(tempPerson);
-					System.out.println(seasonParts[j].trim()+" wasn't in country. They've been added with empty data.");
-				}
-				
-			}
-			
-			sportsYear=findOrAddSportsYearFromInt(year);
-			teamSeason=new TeamSeason(name, ID, sportsYear);
-			teamSeasons.add(teamSeason);
-			}
-			catch (Exception e)
-			{
-				try
-				{
-					String tempString= strings.get(i).trim();
-					ID=tempString.substring(0, tempString.length()-1);
-				}catch (Exception f)
-				{
-					System.out.println("Parsing error in SportsStuff");
-				}
-			}
-
-		}
-	}
-	
-	public SportsYear findOrAddSportsYearFromInt(int i)
-	{
-		if (sportsYears.get(new Integer(i))==null)
-		{
-			SportsYear sy=new SportsYear(i);
-			sportsYears.put(new Integer(i), sy);
-			return sy;
-		}
-		else
-			return sportsYears.get(new Integer(i));
-	}
-	
-	public ArrayList<TeamSeason> getTeamSeasons()
+	public TreeSet<TeamSeason> getTeamSeasons()
 	{
 		return teamSeasons;
 	}
+		
+	//Adder methods
 	
+	/**
+	 * Adds a team to the SportsStuff. Also adds the 
+	 * @param team The team to be added
+	 */
+	public void addTeam(Team team)
+	{
+		teams.put(team.getID(), team);
+		Iterator<TeamSeason> seasonsIterator=team.getSeasons().values().iterator();
+		while(seasonsIterator.hasNext())
+		{
+			teamSeasons.add(seasonsIterator.next());
+		}
+		
+		//Adds the years of this team to the SportsStuff
+		Iterator<SportsYear> yearIterator=team.getYears().values().iterator();
+		while (yearIterator.hasNext())
+		{
+			SportsYear year= yearIterator.next();
+			sportsYears.put(year.getYear(), year);
+		}
+	}
+	
+	/**
+	 * Adds a seasons to the SportsStuff.
+	 * @param season
+	 */
+	public void addTeamSeason(TeamSeason season)
+	{
+		teamSeasons.add(season);		
+	}
+	
+	
+	public void prepareFromCSVUsingCountryModel(String fileName, CountryModel countryModel)
+	{
+		ArrayList<String> strings;
+		try
+		{
+			strings=HelperMethods.convertCSVToStringList(fileName);
+		}catch (Exception e)
+		{
+			System.out.println("Error reading in file");
+			return;
+		}
+		
+		if (strings!=null)
+			prepareFromStringsUsingCountryModel(strings, countryModel);
+		
+	}
+	
+	private void prepareFromStringsUsingCountryModel(ArrayList<String> strings, CountryModel countryModel)
+	{
+		Iterator<String> stringIterator= strings.iterator();
+		Team theTeam= new Team("");
+		while(stringIterator.hasNext())
+		{
+			String[] curStrings=stringIterator.next().split(";");
+			//Checks to see if the teamID is ready
+			if (curStrings.length==1)
+			{
+				if (theTeam.getName()!="")
+				{
+					this.addTeam(theTeam);
+				}
+				theTeam= new Team(curStrings[0]);
+				countryModel.addTeam(theTeam);
+			}
+			else
+			{
+				addSeasonFromStringsToTeam(curStrings, theTeam, countryModel);
+			}
+		}		
+			
+		
+	}
+	
+	private void addSeasonFromStringsToTeam(String[] teamStrings, Team theTeam, CountryModel countryModel)
+	{
+		Integer curYearInteger=new Integer(teamStrings[0].trim());
+		if(sportsYears.get(curYearInteger)==null)
+			sportsYears.put(curYearInteger, new SportsYear(curYearInteger));
+		SportsYear sportsYear= sportsYears.get(curYearInteger);
+		String seasonName=teamStrings[1].trim();
+		State state= countryModel.findStateOrAdd(teamStrings[3].trim());
+		City city=countryModel.findCityOrAdd(state, teamStrings[2].trim());
+		
+		//Readies the teamSeason
+		TeamSeason theSeason= new TeamSeason(seasonName, theTeam, sportsYear, city, state);
+		
+		//Readies players to add if they are not found in the PersonList
+		ArrayList<Person> peopleToAdd= new ArrayList<Person>();
+		
+		//Adds players to the teamSeason
+		for (int i=4; i<teamStrings.length; i++)
+		{
+			String curString=teamStrings[i].trim();
+			Person curPerson=countryModel.findPerson(curString);
+			if (curPerson==null)
+			{
+				curPerson=new Person(curString);
+				countryModel.addPersonWithoutTriggeringEvent(curPerson);
+			}
+			
+			curPerson.addSeason(theSeason);
+			
+		}
+		countryModel.addTeamSeason(theSeason);
+		//Updates the model
+		countryModel.forceUpdate();
+	}
+	
+
 }

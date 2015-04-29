@@ -1,71 +1,59 @@
 package sports;
+import java.util.TreeSet;
 
-import java.io.Serializable;
-
-import countryComponents.DateFormatter;
+import countryComponents.City;
 import countryComponents.Person;
 import countryComponents.PersonList;
+import countryComponents.State;
 
-public class TeamSeason implements Serializable {
+public class TeamSeason implements Comparable<TeamSeason>{
+	//Structural objects
+	private SportsYear sportsYear;
 	
-
-	/**
-	 * What year this season is
-	 */
-	SportsYear sportsYear;
+	private String name;
 	
-	/**
-	 * The name of the team this season
-	 */
-	String name;
+	private Team team;
 	
-	/**
-	 * The ID of the team
-	 */
-	String ID;
+	private TreeSet<Person> players= new TreeSet<Person>();
 	
-	/**
-	 * The players who played this season
-	 */
-	PersonList players;
+	private City city;
 	
-	/**
-	 * The city that the team was based in this season
-	 */
+	private State state;
 	
-	String cityName;
-	/**
-	 * The state that the team was based in this season
-	 */
-	String stateName;
-	public TeamSeason(String name, String ID, SportsYear sportsYear)
+	public TeamSeason(String name, Team team, SportsYear sportsYear, City city, State state)
 	{
 		this.name=name;
-		this.ID=ID;
+		this.team=team;
 		this.sportsYear=sportsYear;
+		sportsYear.addSeason(this);
+		team.addSeason(sportsYear,  this);
 	}
-
 	
-	public PersonList getPlayers()
+	public SportsYear getSportsYear()
+	{
+		return sportsYear;
+	}
+	
+	public TreeSet<Person> getPlayers()
 	{
 		return players;
 	}
 	
-	public String getName()
+	void addPlayer(Person person)
 	{
-		return name;
+		players.add(person);
+		sportsYear.makePersonUnavailable(person);
 	}
 	
 	public String toString()
 	{
-		return name+", "+sportsYear.getYear();
+		//TODO check what JList wants for String representation according to assignment
+		return sportsYear.getYear()+" "+name;
 	}
-	
 
-
-
-	
-	
-	
+	@Override
+	public int compareTo(TeamSeason otherTeamSeason) {
+		return this.toString().compareTo(otherTeamSeason.toString());
+	}
 	
 }
