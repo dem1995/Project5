@@ -2,11 +2,12 @@ package countryComponents;
 
 import java.awt.Color;
 import java.awt.geom.Arc2D;
+import java.io.Serializable;
 
 /**
  *An {@link Arc2D} object that will be a part of a <code>Pie</code> object. It has a weight (how large it should be on the pie) and a name.
  */
-public class Sector extends Arc2D.Double{
+public class Sector extends Arc2D.Double implements Serializable{
 	
 	/**
 	 * This sector's weight with respect to the pie chart

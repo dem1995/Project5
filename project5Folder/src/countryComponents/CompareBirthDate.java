@@ -1,5 +1,6 @@
 package countryComponents;
 
+import java.io.Serializable;
 import java.util.Comparator;
 
 /**
@@ -11,7 +12,7 @@ import java.util.Comparator;
  * </p>
  * @version 1.0
  */
-public class CompareBirthDate implements Comparator<Person>{
+public class CompareBirthDate implements Comparator<Person>, Serializable{
 
 
 

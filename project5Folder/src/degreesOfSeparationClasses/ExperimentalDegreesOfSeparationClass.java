@@ -1,6 +1,5 @@
-package MVCStuff;
+package degreesOfSeparationClasses;
 
-import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.TreeSet;
@@ -8,36 +7,25 @@ import java.util.TreeSet;
 import sports.TeamSeason;
 import countryComponents.Person;
 
-public class DegreesOfSeparationClass {
+public class ExperimentalDegreesOfSeparationClass extends AbstractDegreesOfSeparationClass {
 	
 	private int minSize=0;
 
-	/**
-	 * A deque to be added to/subtracted from when building degrees of separation routes
-	 */
-	private ArrayDeque<Person> journey= new ArrayDeque<Person>();
-	private ArrayDeque<TeamSeason> seasonJourney= new ArrayDeque<TeamSeason>();
-
-	/**
-	 * The paths of shortest degrees of separation
-	 */
-	private ArrayList<ArrayList<Person>> journeys= new ArrayList<ArrayList<Person>>();
-
-	private TreeSet<Person> checkedPersons= new TreeSet<Person>();
 	
+	
+	/**
+	 * 
+	 */
 	private ArrayList<TreeSet<Person>> checkedPersonsV2= new ArrayList<TreeSet<Person>>(4);
 	
+	/**
+	 * 
+	 */
 	private ArrayList<TreeSet<Person>> okayedPersonsV2= new ArrayList<TreeSet<Person>>(4);
 	
-	/**
-	 * The seasons that have already been checked for the getDegrees method
-	 */
-	private TreeSet<TeamSeason> checkedSeasons= new TreeSet<TeamSeason>();
-
-	int count=0;
 
 	
-	public DegreesOfSeparationClass(Person person1, Person person2)
+	public ExperimentalDegreesOfSeparationClass(Person person1, Person person2)
 	{
 			for (int i=0; i<5; i++)
 			{
@@ -121,15 +109,5 @@ public class DegreesOfSeparationClass {
 		minSize=journey.size()-1;
 		
 	}
-		
-	
-	public ArrayList<ArrayList<Person>> getJourneys()
-	{
-		return journeys;
-	}
-	
-	public int getMinSize()
-	{
-		return minSize;
-	}
+
 }

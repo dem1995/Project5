@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.TreeSet;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -203,7 +204,7 @@ public class TeamMateController {
     			public void actionPerformed(ActionEvent e){
     				
     				try{
-    					Pie pie=new Pie(new PersonList(selectionView.getSelectedPeople()), "");
+    					Pie pie=new Pie(new TreeSet(selectionView.getSelectedPeople()), "");
     					new PieChartView(pie);
     				}catch (Exception f){};
     				

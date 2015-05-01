@@ -8,6 +8,8 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.TreeSet;
 
 import javax.swing.JComponent;
 
@@ -24,7 +26,7 @@ public class Pie extends JComponent {
 	 * The total weight of the pie (the sum of the pie's sectors' weights)
 	 */
 	private int weightSum=0;
-	s
+	
 	/**
 	 * The name of the team whose members' ages are being plotted
 	 */
@@ -58,11 +60,11 @@ public class Pie extends JComponent {
 	 * @param personList the personList to construct the pie chart from
 	 * @param teamName The name of the team that holds the personList. If this is just a general personList (i.e., not exclusively part of exclusively one team), then this value should be an empty String
 	 */
-	public Pie(PersonList personList, String teamName)
+	public Pie(TreeSet<Person> personList, String teamName)
 	{
 		this();
 		this.teamName=teamName;
-		ArrayList<Person> personArrayList=personList.getPeople();
+		ArrayList<Person> personArrayList=new ArrayList<Person>(Arrays.asList(personList.toArray(new Person[0])));
 		for (Person person: personArrayList)
 		{
 			ageArray[person.getAge()]=ageArray[person.getAge()]+1;

@@ -1,11 +1,12 @@
 package countryComponents;
 
+import java.io.Serializable;
 import java.util.Comparator;
 
 /**
  *Compares two cities lexicographically first by city name, then by names of the states they're in
  */
-public class CompareCityThenState implements Comparator<City> 
+public class CompareCityThenState implements Comparator<City>, Serializable
 {
 
 	public int compare(City city1, City city2) 

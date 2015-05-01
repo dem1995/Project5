@@ -1,5 +1,6 @@
 package countryComponents;
 
+import java.io.Serializable;
 import java.util.Comparator;
 
 /**
@@ -10,7 +11,7 @@ import java.util.Comparator;
  * A comparator object that takes in two <code>Person</code>s and compares their <code>middleNames</code>s
  * </p>
  */
-public class CompareMiddleNames implements Comparator<Person> 
+public class CompareMiddleNames implements Comparator<Person>, Serializable
 	{
 
 		public int compare(Person person1, Person person2) 
