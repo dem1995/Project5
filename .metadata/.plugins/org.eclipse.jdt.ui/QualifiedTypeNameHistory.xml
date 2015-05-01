@@ -14,7 +14,6 @@
 <fullyQualifiedTypeName name="javax.swing.ListSelectionModel"/>
 <fullyQualifiedTypeName name="countryComponents.DateFormatter"/>
 <fullyQualifiedTypeName name="java.text.ParseException"/>
-<fullyQualifiedTypeName name="MVCStuff.CountryModel"/>
 <fullyQualifiedTypeName name="javax.swing.event.ListSelectionEvent"/>
 <fullyQualifiedTypeName name="javax.swing.JScrollPane"/>
 <fullyQualifiedTypeName name="javax.swing.JTextField"/>
@@ -22,5 +21,9 @@
 <fullyQualifiedTypeName name="java.awt.GridLayout"/>
 <fullyQualifiedTypeName name="javax.swing.JLabel"/>
 <fullyQualifiedTypeName name="javax.swing.JButton"/>
+<fullyQualifiedTypeName name="MVCStuff.CountryModel"/>
+<fullyQualifiedTypeName name="sports.SportsStuff"/>
+<fullyQualifiedTypeName name="MVCStuff.DegreesOfSeparationListView"/>
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="java.util.HashMap"/>
 </qualifiedTypeNameHistroy>

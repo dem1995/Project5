@@ -75,7 +75,7 @@ public class SportsStuff {
 	}
 	
 	
-	public void prepareFromCSVUsingCountryModel(String fileName, CountryModel countryModel)
+	public static void prepareFromCSVUsingCountryModel(String fileName, CountryModel countryModel)
 	{
 		ArrayList<String> strings;
 		try
@@ -92,38 +92,53 @@ public class SportsStuff {
 		
 	}
 	
-	private void prepareFromStringsUsingCountryModel(ArrayList<String> strings, CountryModel countryModel)
+	private static void prepareFromStringsUsingCountryModel(ArrayList<String> strings, CountryModel countryModel)
 	{
+		char splitter=';';
 		Iterator<String> stringIterator= strings.iterator();
 		Team theTeam= new Team("");
 		while(stringIterator.hasNext())
 		{
-			String[] curStrings=stringIterator.next().split(";");
-			//Checks to see if the teamID is ready
-			if (curStrings.length==1)
+			String nextString=stringIterator.next().trim();
+			if(nextString.startsWith("sep="))
 			{
-				if (theTeam.getName()!="")
-				{
-					this.addTeam(theTeam);
-				}
-				theTeam= new Team(curStrings[0]);
-				countryModel.addTeam(theTeam);
+				splitter=nextString.charAt(nextString.length()-1);
+				System.out.println(splitter);
 			}
 			else
 			{
-				addSeasonFromStringsToTeam(curStrings, theTeam, countryModel);
+				String[] curStrings=nextString.split(""+splitter);
+				//Checks to see if first line is defining how the csv file is split
+				//Checks to see if the teamID is the thing to prepare
+				if (!curStrings[0].matches("\\d+"))
+				{
+					if (theTeam.getName()!="")
+					{
+						countryModel.getSportsStuff().addTeam(theTeam);
+					}
+					theTeam= new Team(curStrings[0]);
+					countryModel.addTeam(theTeam);
+				}
+				else
+				{
+					addSeasonFromStringsToTeam(curStrings, theTeam, countryModel);
+				}
 			}
-		}		
-			
-		
-	}
+		}
+		//Updates the model
+		countryModel.forceUpdate();
+
+	}		
+
+
+
 	
-	private void addSeasonFromStringsToTeam(String[] teamStrings, Team theTeam, CountryModel countryModel)
+	private static void addSeasonFromStringsToTeam(String[] teamStrings, Team theTeam, CountryModel countryModel)
 	{
 		Integer curYearInteger=new Integer(teamStrings[0].trim());
-		if(sportsYears.get(curYearInteger)==null)
-			sportsYears.put(curYearInteger, new SportsYear(curYearInteger));
-		SportsYear sportsYear= sportsYears.get(curYearInteger);
+		if(countryModel.getSportsStuff().getYears().get(curYearInteger)==null)
+			countryModel.getSportsStuff().getYears().put(curYearInteger, new SportsYear(curYearInteger));
+		SportsYear sportsYear= countryModel.getSportsStuff().getYears().get(curYearInteger);
 		String seasonName=teamStrings[1].trim();
 		State state= countryModel.findStateOrAdd(teamStrings[3].trim());
 		City city=countryModel.findCityOrAdd(state, teamStrings[2].trim());
@@ -131,8 +146,6 @@ public class SportsStuff {
 		//Readies the teamSeason
 		TeamSeason theSeason= new TeamSeason(seasonName, theTeam, sportsYear, city, state);
 		
-		//Readies players to add if they are not found in the PersonList
-		ArrayList<Person> peopleToAdd= new ArrayList<Person>();
 		
 		//Adds players to the teamSeason
 		for (int i=4; i<teamStrings.length; i++)
@@ -150,8 +163,7 @@ public class SportsStuff {
 			
 		}
 		countryModel.addTeamSeason(theSeason);
-		//Updates the model
-		countryModel.forceUpdate();
+
 	}
 	
 

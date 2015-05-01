@@ -128,7 +128,7 @@ public class TeamMateController {
         						try{
         	    					SportsStuff tempSportsStuff=new SportsStuff();
         	    					tempSportsStuff.prepareFromCSVUsingCountryModel(chosenFile, countryModel);
-        	    					countryModel.setSportsStuff(tempSportsStuff);
+        	    					//countryModel.setSportsStuff(tempSportsStuff);
         	    				}catch(Exception f)
         	    				{
         	    					System.out.println("Team loading failed");

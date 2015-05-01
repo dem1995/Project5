@@ -29,6 +29,12 @@ public class TeamSeason implements Comparable<TeamSeason>{
 		team.addSeason(sportsYear,  this);
 	}
 	
+	private TeamSeason()
+	{
+		this.name="";
+		this.sportsYear=new SportsYear(0);
+	}
+	
 	public SportsYear getSportsYear()
 	{
 		return sportsYear;
@@ -48,6 +54,12 @@ public class TeamSeason implements Comparable<TeamSeason>{
 	{
 		players.add(person);
 		sportsYear.makePersonUnavailable(person);
+	}
+	
+	//Method for use in degrees of separation
+	public static TeamSeason makeEmptyTeamSeason()
+	{
+		return new TeamSeason();
 	}
 	
 	public String toString()

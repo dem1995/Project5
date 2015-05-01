@@ -2,37 +2,45 @@ package tests;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+
 import org.junit.Test;
 
+import MVCStuff.CountryModel;
+import MVCStuff.DegreesOfSeparationListView;
 import otherClasses.HelperMethods;
+import sports.SportsStuff;
 import sports.SportsYear;
 import sports.TeamSeason;
 import countryComponents.Person;
 
 public class DegreesofSeparationTest {
 
+	//A test involving one direct path
 	@Test
-	public void test() {
-		//Create some people here
-		Person person1=new Person("a");
-		Person person2=new Person("b");
-		Person person3=new Person("c");
-		Person person4=new Person("d");
-		Person person5=new Person("e");
-		Person person6=new Person("f");
+	public void testInvolvingOneDirectPath() {
 		
-		//Put them in teams
-		SportsYear year= new SportsYear(1998);
-		TeamSeason season1= new TeamSeason();
-		TeamSeason season2= new TeamSeason("harold", "irwin", year);
-		TeamSeason season3= new TeamSeason("john", "karl", year);
-		//Put them in teams here (//TODO)
-		
-		//Find the shortest distance between two of them
-		HelperMethods helperMethods=new HelperMethods();
-		helperMethods.getDegrees(person1, person6, person1);
-		
-		//assert here (//TODO)
+		CountryModel countryModel= new CountryModel();
+		SportsStuff.prepareFromCSVUsingCountryModel("TestCSVFiles/testoneroute.csv", countryModel);
+		DegreesOfSeparationListView dosView= new DegreesOfSeparationListView(countryModel.findPerson("Person A"), countryModel.findPerson("Person C"));
+		//dosView.getDegrees(countryModel.findPerson("Player 1"), countryModel.findPerson("Player 2"), TeamSeason.makeEmptyTeamSeason());
+		ArrayList<ArrayList<Person>> journeys= dosView.dos.getJourneys();
+		System.out.println(journeys);
+		assertEquals(new Integer(2), new Integer(dosView.dos.getJourneys().get(0).size()-1));
 	}
+	
+	//A test involving two direct paths
+	@Test
+	public void testInvolvingTwoDirectPaths() {
+		
+		CountryModel countryModel= new CountryModel();
+		SportsStuff.prepareFromCSVUsingCountryModel("TestCSVFiles/testTwoRoutes.csv", countryModel);
+		DegreesOfSeparationListView dosView= new DegreesOfSeparationListView(countryModel.findPerson("Person A"), countryModel.findPerson("Person E"));
+		//dosView.getDegrees(countryModel.findPerson("Player 1"), countryModel.findPerson("Player 2"), TeamSeason.makeEmptyTeamSeason());
+		ArrayList<ArrayList<Person>> journeys= dosView.dos.getJourneys();
+		System.out.println(journeys); //For reasons that I'm not taking the time to look at, for some reason this test duplicates something that the normal code doesn't.
+		assertEquals(new Integer(3), new Integer(dosView.dos.getJourneys().get(0).size()-1));
+	}
+	
 
 }
