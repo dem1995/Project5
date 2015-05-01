@@ -118,6 +118,15 @@ public class State implements Comparable<State>, Serializable{
 	
 	//Other methods
 	
+	
+	void removePerson(Person person)
+	{
+		City theCity= findCity(person.getCityName());
+		theCity.getPersonList().removePerson(person);
+		this.allThePeopleInTheState.remove(person);
+		
+	}
+	
 	/**
 	 * Removes a city from this state
 	 * @param city the city to be removed

@@ -15,6 +15,7 @@ import countryComponents.PersonList;
 import otherClasses.HelperMethods;
 import otherClasses.Pie;
 import sports.SportsStuff;
+import sports.TeamSeason;
 /**
  * Project #4
  * CS 2334, Section 010
@@ -32,7 +33,14 @@ public class TeamMateController {
 	
 	private CitySelectionView citySelectionView;
 	
+	private EditCityView editCityView;
+	
 	private PersonEntryView personEntryView;
+	
+	private EditPersonView editPersonView;
+
+	
+	private ArrayList<DegreesOfSeparationListView> degreesOfSeparationListViews= new ArrayList<DegreesOfSeparationListView>();
 	
 	/**
 	 * The name of the file used for importing/loading/saving/exporting
@@ -254,6 +262,26 @@ public class TeamMateController {
     				setStateSelectionView(new StateSelectionView(), stateSelectionToCitySelection);
     			}
     		});
+    		
+    		selectionView.getEditPlaceButton().addActionListener(new ActionListener(){
+    			public void actionPerformed(ActionEvent e)
+    			{
+    				if(selectionView.getSelectedPlaces().size()==1)
+    					setEditCityView(new EditCityView(selectionView.getSelectedPlaces().get(0)));
+    			}
+    		});
+    		
+    		selectionView.getEditPersonButton().addActionListener(new ActionListener(){
+    			public void actionPerformed(ActionEvent e)
+    			{
+    				if (selectionView.getSelectedPeople().size()==1)
+    				{
+    					setEditPersonView(new EditPersonView(selectionView.getSelectedPeople().get(0), countryModel));
+    				}
+    			}
+    		});
+    		
+    		
     		selectionView.getRemovePlaceButton().addActionListener(new ActionListener(){
     			public void actionPerformed(ActionEvent e)
     			{
@@ -263,6 +291,7 @@ public class TeamMateController {
     				}
     			}
     		});
+    		
     		
     		selectionView.getRemovePersonButton().addActionListener(new ActionListener(){
     			public void actionPerformed(ActionEvent e){
@@ -278,6 +307,12 @@ public class TeamMateController {
     		selectionView.getAddTeamButton().addActionListener(new ActionListener(){
     			public void actionPerformed(ActionEvent e){
     					//TODO Map Method
+    			}
+    		});
+    		
+    		selectionView.getDegreesOfSeparationButton().addActionListener(new ActionListener(){
+    			public void actionPerformed(ActionEvent e){
+    				prepareDegreesOfSeparationViews();
     			}
     		});
     		
@@ -340,6 +375,34 @@ public class TeamMateController {
     	
     }
     
+    public void setEditCityView(EditCityView editCityView)
+    {
+    	this.editCityView= editCityView;
+    	editCityView.setModel(countryModel);
+    	if (countryModel!=null)
+    	{
+    		editCityView.getEnterButton().addActionListener(new ActionListener(){
+
+				public void actionPerformed(ActionEvent e) {
+					try{
+						City theCity= editCityView.getCity();
+						theCity.setName(editCityView.getName());
+						theCity.setLatitude(editCityView.getLatitude());
+						theCity.setLongitude(editCityView.getLongitude());
+						countryModel.forceUpdate();
+						
+					}catch (Exception f)
+					{
+						System.out.println("Error editing city");
+					}
+					
+				}
+    			
+    		});
+    	}
+    	
+    }
+    
     public void setPersonEntryView(PersonEntryView personEntryView)
     {
     	this.personEntryView=personEntryView;
@@ -366,6 +429,48 @@ public class TeamMateController {
     		//TODO
     }
     
-
+    public void setEditPersonView(EditPersonView editPersonView)
+    {
+    	this.editPersonView=editPersonView;
+    	editPersonView.setModel(countryModel);
+    	editPersonView.getEnterButton().addActionListener(new ActionListener(){
+    		public void actionPerformed(ActionEvent e)
+    		{
+    			try
+    			{    				
+    				editPersonView.getPerson().remakeAs(countryModel, editPersonView.getCreatedPerson(), editPersonView.getSelectedState(), editPersonView.getSelectedCity());
+    				editPersonView.setVisible(false);
+    				editPersonView.dispose();
+    			}catch (Exception f)
+    			{
+    				System.out.println("Changing the person failed");
+    			}
+    		}
+    	});
+    }
+    
+    
+    /**
+     * Activated when degreesOfSeparation button is pressed
+     */
+    public void prepareDegreesOfSeparationViews()
+    {  	
+    	ArrayList<Person> selectedPeople=selectionView.getSelectedPeople();
+    	if (selectedPeople.size()==1)
+    	{
+    		for (TeamSeason season: selectedPeople.get(0).getTeamSeasons())
+    		{
+				DegreesOfSeparationListView dOSLV= new DegreesOfSeparationListView(selectedPeople.get(0), season);
+    			degreesOfSeparationListViews.add(dOSLV);
+    			dOSLV.setModel(countryModel);
+    			
+    		}
+    	}
+    	else if (selectedPeople.size()==2)
+    	{
+    		DegreesOfSeparationListView dOSLV= new DegreesOfSeparationListView(selectedPeople.get(0), selectedPeople.get(1));
+  
+    	}
+    }
     
 }

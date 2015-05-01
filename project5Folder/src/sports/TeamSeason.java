@@ -39,6 +39,11 @@ public class TeamSeason implements Comparable<TeamSeason>{
 		return players;
 	}
 	
+	public boolean contains(Person person)
+	{
+		return players.contains(person);
+	}
+	
 	void addPlayer(Person person)
 	{
 		players.add(person);

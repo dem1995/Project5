@@ -91,6 +91,7 @@ public class PersonEntryView extends View {
 		return enterButton;
 	}
 	
+	
 	/**
 	 * Returns a person from the data entered
 	 * @return A person from the data entered via this view

@@ -29,7 +29,7 @@ public abstract class View extends JFrame implements ActionListener
 	/**
 	 * The TeamMateModel used by this view
 	 */
-	private CountryModel countryModel;
+	protected CountryModel countryModel;
 
 	/**
 	 * The title of this window.

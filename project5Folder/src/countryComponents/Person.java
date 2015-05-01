@@ -6,9 +6,12 @@ package countryComponents;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.TreeSet;
 
+import MVCStuff.CountryModel;
 import sports.TeamSeason;
 
 /**
@@ -61,9 +64,8 @@ public class Person implements Comparable<Person>, Serializable {
 	/**
 	 * The teamSeasons this person has been a part of
 	 */
-	private HashSet<TeamSeason> teamSeasons= new HashSet<TeamSeason>();
+	private TreeSet<TeamSeason> teamSeasons= new TreeSet<TeamSeason>();
 	
-	private int age;
 	//Instance Methods~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 	/**
@@ -77,7 +79,6 @@ public class Person implements Comparable<Person>, Serializable {
 		this.firstName=firstName;
 		this.lastName=lastName;
 		this.birthDate=birthDate;
-		age = getAge(this.birthDate, null);
 	}
 	/**
 	 * Constructor method for a person with a first name, a middle name, a last name, and a birthdate.
@@ -92,7 +93,6 @@ public class Person implements Comparable<Person>, Serializable {
 		this.lastName=lastName;
 		this.birthDate=birthDate;
 		this.deathDate=deathDate;
-		age = getAge(this.birthDate,this.deathDate);
 	}
 	
 	/**
@@ -257,6 +257,11 @@ public class Person implements Comparable<Person>, Serializable {
 		this.stateName=stateName;
 	}
 	
+	public void setBirthDate(Date birthDate)
+	{
+		this.birthDate= birthDate;
+	}
+	
 	/**
 	 * Setter method for <code>deathDate</code>
 	 * @param deathDate	the date of death of the person
@@ -302,6 +307,7 @@ public class Person implements Comparable<Person>, Serializable {
 	@SuppressWarnings("deprecation")
 	public int getAge(Date birth, Date death)
 	{
+		int age;
 		try{
 			
 		if(birth!=null)
@@ -328,12 +334,35 @@ public class Person implements Comparable<Person>, Serializable {
 		
 	}
 	
+	public TreeSet<TeamSeason> getTeamSeasons()
+	{
+		return teamSeasons;
+	}
+	
 	//Adder methods
 	public void addSeason(TeamSeason teamSeason)
 	{
 		teamSeasons.add(teamSeason);
 	}
+	public void setSeasons(TreeSet<TeamSeason> teamSeasons)
+	{
+		this.teamSeasons.addAll(teamSeasons);
+	}
 	
+	//Other methods
+	public void remakeAs(CountryModel countryModel, Person newPerson, State state, City city)
+	{				
+		this.firstName=newPerson.getFirstName();
+		this.middleNames=newPerson.getMiddleNames();
+		this.lastName= newPerson.getLastName();
+		this.setBirthDate(newPerson.getBirthDate());
+		this.setDeathDate(newPerson.getDeathDate());
+		countryModel.removePerson(this);
+		this.stateName=state.getName();
+		this.cityName=city.getName();
+		countryModel.addPerson(this);
+		
+	}
 	
 	//Interface-required Methods~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	public int compareTo(Person otherPerson) {

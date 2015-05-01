@@ -13,6 +13,7 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.TreeSet;
 
 import MVCStuff.CountryModel;
 import countryComponents.Country;
@@ -21,6 +22,7 @@ import sports.TeamSeason;
 
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
+
 
 
 
@@ -43,36 +45,7 @@ import countryComponents.Country;
  */
 public class HelperMethods {
 	
-	
-/**
- * A deque to be added to/subtracted from when building degrees of separation routes
- */
-private ArrayDeque<Person> deque;
 
-/**
- * The paths of shortest degrees of separation
- */
-private ArrayList<ArrayDeque<Person>> paths;
-
-/**
- * The seasons that have already been checked for the getDegrees method
- */
-private HashSet<TeamSeason> checkedSeasons;
-
-
-
-	/**
-	 * A method for getting the shortest degrees of separation paths between two people
-	 * @param start The person to start from
-	 * @param end	The destination person
-	 * @param current	The intermediate person currently being checked
-	 * @return whether or not a new shortest degrees of freedom path was found.
-	 */
-	public boolean getDegrees(Person start, Person end, Person current)
-	{
-		//TODO
-		return true;
-	}
 
 	/**
 	 * Method for converting a CSV file to a list of String objects in the form "Name, birthDate, birthCity, birthState" or "Name, birthDate, birthCity, birthState"

@@ -88,6 +88,9 @@ public class SelectionView extends View {
 	private JButton deletePlaceButton= new JButton("Delete (Delete a city once to clear its contents, delete it again to remove it from the above list");
 	private JButton deletePersonButton= new JButton("Delete");
 	private JButton deleteSeasonButton= new JButton ("Delete");
+	
+	private JButton degreesOfSeparationButton= new JButton("Degrees of Separation");
+	
 	/**
 	 * The constructor method for SelectionView
 	 */
@@ -106,8 +109,8 @@ public class SelectionView extends View {
 		this.setExtendedState(Frame.MAXIMIZED_BOTH);
 		
 		//Set the layout for the JFrame
-		this.setLayout(new GridLayout(5, 3));
-
+		this.setLayout(new GridLayout(6,3));
+		
 		//Set up the menu bar
 		setJMenuBar(new JMenuBar());
 
@@ -153,6 +156,10 @@ public class SelectionView extends View {
 		deletePersonButton.setEnabled(false);
 		this.add(deleteSeasonButton);
 		deleteSeasonButton.setEnabled(false);
+		
+		this.add(new JLabel());
+		this.add(degreesOfSeparationButton);
+		degreesOfSeparationButton.setEnabled(false);
 		validate();
 	}
 	
@@ -194,6 +201,14 @@ public class SelectionView extends View {
 		return addSeasonButton;
 	}
 	
+	public JButton getEditPlaceButton(){
+		return editPlaceButton;
+	}
+	
+	public JButton getEditPersonButton(){
+		return editPersonButton;
+	}
+	
 	public JButton getRemovePlaceButton()
 	{
 		return deletePlaceButton;
@@ -203,6 +218,9 @@ public class SelectionView extends View {
 		return deletePersonButton;
 	}
 	
+	public JButton getDegreesOfSeparationButton(){
+		return degreesOfSeparationButton;
+	}
 	
 
 	public void setModel(CountryModel countryModel)
@@ -281,11 +299,14 @@ public class SelectionView extends View {
 		if (cityList.size()!=0)
 		{
 			addPersonButton.setEnabled(true);
+			editPlaceButton.setEnabled(true);
 			deletePlaceButton.setEnabled(true);
+			
 		}
 		else
 		{
 			addPersonButton.setEnabled(false);
+			editPlaceButton.setEnabled(false);
 			deletePlaceButton.setEnabled(false);
 		}
 		
@@ -302,9 +323,17 @@ public class SelectionView extends View {
 			peopleList.setListData(personList.toArray(new Person[0]));
 		}
 		if (personList.size()==0)
+		{
+			editPersonButton.setEnabled(false);
 			deletePersonButton.setEnabled(false);
+			degreesOfSeparationButton.setEnabled(false);
+		}
 		else
+		{
+			editPersonButton.setEnabled(true);
 			deletePersonButton.setEnabled(true);
+			degreesOfSeparationButton.setEnabled(true);
+		}
 	}
 	
 	/**

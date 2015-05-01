@@ -270,8 +270,8 @@ public class Country implements Serializable {
 		allThePeople.remove(location);
 		//treeMap.remove(person);
 		treeMapNeedsBuilding=true;
-		City theCity=findCityOrAdd(findStateOrAdd(person.getStateName()),person.getCityName());
-		theCity.getPersonList().removePerson(person);
+		State theState= findStateOrAdd(person.getStateName());
+		theState.removePerson(person);
 	}
 	
 	/**

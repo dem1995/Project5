@@ -2,6 +2,7 @@ package countryComponents;
 
 import java.awt.geom.Point2D;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * Project #4
@@ -84,6 +85,24 @@ public class City implements Comparable<City>, Serializable {
 	{
 		return cityName;
 	}
+
+	/**
+	 * A getter method for latitude
+	 * @return the latitude
+	 */
+	public double getLatitude()
+	{
+		return latitude;
+	}
+	
+	/**
+	 * A getter method for longitude
+	 * @return the longitude
+	 */
+	public double getLongitude()
+	{
+		return longitude;
+	}
 	
 	/**
 	 * A getter method for coordinates
@@ -112,11 +131,21 @@ public class City implements Comparable<City>, Serializable {
 	{
 		theState=state;
 	}
+	
+	public void setName(String name)
+	{
+		this.cityName=name;
+		ArrayList<Person> pList= personList.getPeople();
+		for (int i=0; i<pList.size(); i++)
+		{
+			pList.get(i).setCityName(this.cityName);
+		}
+	}
 	/**
 	 * Adjusts the y-value of this city's geographic location
 	 * @param latitude the y-value of this city's geographic location
 	 */
-	public void setLatitude(int latitude)
+	public void setLatitude(double latitude)
 	{
 		this.latitude = latitude;
 	}
@@ -124,7 +153,7 @@ public class City implements Comparable<City>, Serializable {
 	 * Adjusts the x-value of this city's geographic location
 	 * @param longitude the x-value of this city's geographic location
 	 */
-	public void setLongitude(int longitude)
+	public void setLongitude(double longitude)
 	{
 	    this.longitude = longitude;
 	}
@@ -134,7 +163,7 @@ public class City implements Comparable<City>, Serializable {
 	 * @param latitude The latitude of this city
 	 * @param longitude The longitude of this city
 	 */
-	public void setCoordinates(int latitude, int longitude)
+	public void setCoordinates(double latitude, double longitude)
 	{
 		this.latitude=latitude;
 		this.longitude=longitude;		

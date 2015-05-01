@@ -1,0 +1,13 @@
+diff(start, end)
+	if(journey.size()<=minsize)
+	
+	else
+		journey.push(start)
+		if(journey.peek()==end)
+			addJourney();
+		else
+			for (currentTeam: journey.peek().getTeams())
+				for (currentPlayer: currentTeam.getPlayers())
+					diff(currentPlayer, end)
+		journey.pop()
+	

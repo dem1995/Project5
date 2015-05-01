@@ -144,6 +144,7 @@ public class SportsStuff {
 				curPerson=new Person(curString);
 				countryModel.addPersonWithoutTriggeringEvent(curPerson);
 			}
+			theSeason.addPlayer(curPerson);
 			
 			curPerson.addSeason(theSeason);
 			
