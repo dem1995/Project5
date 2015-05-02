@@ -1,11 +1,12 @@
 package sports;
 
+import java.io.Serializable;
 import java.util.TreeMap;
 
 /**
  * An object that holds all the seasons of team.
  */
-public class Team {
+public class Team implements Comparable<Team>, Serializable{
 	
 	//Structural objects	
 	/**
@@ -78,5 +79,17 @@ public class Team {
 	{
 		seasons.put(sportsYear, teamSeason);
 		years.put(sportsYear.getYear(), sportsYear);
+	}
+	
+	//Other methods
+	
+	public String toString()
+	{
+		return ID;
+	}
+
+	@Override
+	public int compareTo(Team o) {
+		return this.getName().compareTo(o.getName());
 	}
 }

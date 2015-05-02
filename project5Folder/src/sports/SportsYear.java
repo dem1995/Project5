@@ -1,10 +1,11 @@
 package sports;
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.TreeSet;
 
 import countryComponents.Person;
 
-public class SportsYear implements Comparable<SportsYear> {
+public class SportsYear implements Comparable<SportsYear>, Serializable {
 
 	//Structural items
 	/**
@@ -93,6 +94,10 @@ public class SportsYear implements Comparable<SportsYear> {
 		unusedPlayers.remove(person);
 	}
 
+	public String toString()
+	{
+		return year+"";
+	}
 
 	@Override
 	public int compareTo(SportsYear o) {

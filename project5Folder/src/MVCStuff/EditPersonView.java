@@ -23,29 +23,54 @@ import countryComponents.State;
  * April 20, 2015
  */
 public class EditPersonView extends View {
-	
+
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
-	
+	private static final long serialVersionUID = -8908144781011843194L;
+
+
+	/**
+	 * The person being edited
+	 */
 	private Person person;
 
 	
+	/**
+	 * The text field for the name of the person
+	 */
 	private JTextField nameField= new JTextField();
 	
+	/**
+	 * The list of states to assign the person to
+	 */
 	private JList<State> stateList= new JList<State>();
 	
+	/**
+	 * The list of cities to assign the person to
+	 */
 	private JList<City> cityList= new JList<City>();
 	
+	/**
+	 * The field to enter the birth date into
+	 */
 	private JTextField birthDateField= new JTextField();
 	
+	/**
+	 * The field to enter the death date into
+	 */
 	private JTextField deathDateField= new JTextField();
 	
+	/**
+	 * The button to submit changes
+	 */
 	private JButton enterButton= new JButton("Enter");
 	
+
 	/**
-	 * Constructor for EditView
+	 * View for editing a Person
+	 * @param p the person to be edited
+	 * @param countryModel the model the person is in
 	 */
 	public EditPersonView(Person p, CountryModel countryModel)
 	{
@@ -98,16 +123,29 @@ public class EditPersonView extends View {
 	}
 	
 	
+	/**
+	 * Retrieves the button used to submit the changes
+	 * @return the button used to submit the changes
+	 */
 	public JButton getEnterButton()
 	{
 		return enterButton;
 	}
 	
+	/**
+	 * Retrieves the person being edited
+	 * @return the person being edited
+	 */
 	public Person getPerson()
 	{
 		return person;
 	}
 	
+	/**
+	 * Returns a person created from the fields present in this view
+	 * @return a person created from the fields present in this view
+	 * @throws ParseException when date parsing fails
+	 */
 	public Person getCreatedPerson() throws ParseException
 	{
 		Person p;
@@ -128,11 +166,19 @@ public class EditPersonView extends View {
 		return p;
 	}
 	
+	/**
+	 * Retrieves the State selected in the State list
+	 * @return the state selected in the State list
+	 */
 	public State getSelectedState()
 	{
 		return stateList.getSelectedValue();
 	}
 	
+	/**
+	 * Retrieves the City selected in the City list 
+	 * @return the City selected in the City list
+	 */
 	public City getSelectedCity()
 	{
 		return cityList.getSelectedValue();

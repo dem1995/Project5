@@ -1,4 +1,5 @@
 package sports;
+import java.io.Serializable;
 import java.util.TreeSet;
 
 import countryComponents.City;
@@ -6,7 +7,7 @@ import countryComponents.Person;
 import countryComponents.PersonList;
 import countryComponents.State;
 
-public class TeamSeason implements Comparable<TeamSeason>{
+public class TeamSeason implements Comparable<TeamSeason>, Serializable{
 	//Structural objects
 	private SportsYear sportsYear;
 	
@@ -55,6 +56,7 @@ public class TeamSeason implements Comparable<TeamSeason>{
 		players.add(person);
 		sportsYear.makePersonUnavailable(person);
 	}
+	
 	
 	//Method for use in degrees of separation
 	public static TeamSeason makeEmptyTeamSeason()

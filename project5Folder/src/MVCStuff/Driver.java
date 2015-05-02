@@ -2,12 +2,10 @@ package MVCStuff;
 
 
 /**
-
- * Project #4
+ * The driver for the program. Sets up the views/controller/model
+ * Project #5
  * CS 2334, Section 010
- * April 20, 2015
-
- *The driver for the program
+ * May 1, 2015
  */
 public class Driver {
 	/**

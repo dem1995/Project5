@@ -84,7 +84,7 @@ public class HelperMethods {
 		}		
 		try 
 		{
-			stream.writeObject(countryModel);
+			stream.writeObject(countryModel.getPeople());
 			stream.close();
 		} catch (IOException e) 
 		{

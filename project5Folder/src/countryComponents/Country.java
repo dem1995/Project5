@@ -288,6 +288,11 @@ public class Country implements Serializable {
 			this.removePerson(cityPeople.get(i));
 		}
 	}
+	
+	protected void removeTeam(Team team)
+	{
+		sportsStuff.removeTeam(team);
+	}
 
 	
 	

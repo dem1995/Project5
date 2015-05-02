@@ -18,9 +18,9 @@ import countryComponents.State;
 
 /**
  *The model for a Country object. It extends Country to fire events whenever things are added to it.
- * Project #4
+ * Project #5
  * CS 2334, Section 010
- * April 20, 2015
+ * May 1, 2015
  */
 public class CountryModel extends Country {
 	
@@ -197,6 +197,14 @@ public class CountryModel extends Country {
 	{
 		super.removeCity(city);
 		processEvent(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, Constants.CITY_ADDED));
+	}
+	
+	public void removeTeam(Team team)
+	{
+		super.removeTeam(team);
+		processEvent(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, Constants.TEAM_ADDED));
+		processEvent(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, Constants.SEASON_ADDED));
+
 	}
 	
 	/**

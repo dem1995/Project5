@@ -9,15 +9,17 @@ import otherClasses.Pie;
  * Project #4
  * CS 2334, Section 010
  * April 20, 2015
-
  *The view for displaying a pie chart
  */
 public class PieChartView extends View {
 	
-	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8036190929303162310L;
 	
 	/**
-	 * The pie to maket this view with
+	 * The pie to make this view with
 	 */
 	Pie pie;
 	

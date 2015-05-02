@@ -33,12 +33,24 @@ public class PersonEntryView extends View {
 	 */
 	private JButton enterButton= new JButton();
 	
+	/**
+	 * The city the person is being added to
+	 */
 	private City city;
 	
+	/**
+	 * The text field for the name of the person
+	 */
 	JTextField personName= new JTextField();
 	
+	/**
+	 * The text field for the birth date of the person
+	 */
 	JTextField birthDate = new JTextField();
 	
+	/**
+	 * The text field for the death date of the person
+	 */
 	JTextField deathDate = new JTextField();
 	
 	/**

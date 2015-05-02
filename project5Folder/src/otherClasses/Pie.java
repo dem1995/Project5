@@ -12,7 +12,10 @@ import java.util.Arrays;
 import java.util.TreeSet;
 
 import javax.swing.JComponent;
+import javax.swing.JList;
 
+import sports.SportsYear;
+import sports.Team;
 import sports.TeamSeason;
 import countryComponents.Person;
 import countryComponents.PersonList;
@@ -48,6 +51,12 @@ public class Pie extends JComponent {
 	public Pie()
 	{
 		this.setPreferredSize(new Dimension (1000, 1000));
+	}
+	
+	public Pie(Team team)
+	{
+		SportsYear[] years= (team.getYears().values().toArray(new SportsYear[0]));
+		SportsYear year=
 	}
 	
 	public Pie(TeamSeason teamSeason)

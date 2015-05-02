@@ -38,6 +38,9 @@
 			<item value="=project5Folder/src&lt;MVCStuff" key="accessorPackage"/>
 		</section>
 	</section>
+	<section name="NewPackageWizardPage">
+		<item value="false" key="create_package_info_java"/>
+	</section>
 	<section name="completion_proposal_size">
 	</section>
 	<section name="JavaElementSearchActions">

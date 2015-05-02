@@ -1,6 +1,8 @@
 package sports;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.ListIterator;
 import java.util.TreeMap;
@@ -12,7 +14,7 @@ import countryComponents.State;
 import otherClasses.HelperMethods;
 import MVCStuff.CountryModel;
 
-public class SportsStuff {
+public class SportsStuff implements Serializable{
 	//Structural components
 	private TreeMap<String, Team> teams= new TreeMap<String, Team>();
 	private TreeMap<Integer, SportsYear> sportsYears= new TreeMap<Integer, SportsYear>();
@@ -24,7 +26,14 @@ public class SportsStuff {
 	 * Constructor for SportsStuff
 	 */
 	public SportsStuff()
-	{}
+	{
+		Calendar calendar= Calendar.getInstance();
+		int endYear=calendar.get(Calendar.YEAR);
+		for (int i=1946; i<endYear+1; i++)
+		{
+			sportsYears.put(new Integer(i), new SportsYear(i));
+		}
+	}
 	
 	public TreeMap<String, Team> getTeams()
 	{
@@ -63,6 +72,21 @@ public class SportsStuff {
 			SportsYear year= yearIterator.next();
 			sportsYears.put(year.getYear(), year);
 		}
+	}
+	
+	public void removeTeam(Team team)
+	{
+		ArrayList<TeamSeason> teamSeasonsForRemoving= new ArrayList<TeamSeason>(team.getSeasons().values());
+		for (int i=0; i<teamSeasonsForRemoving.size(); i++)
+		{
+			this.teamSeasons.remove(teamSeasonsForRemoving.get(i));
+			ArrayList<Person> peopleToRemoveSeasonFrom=new ArrayList<Person>(teamSeasonsForRemoving.get(i).getPlayers());
+			for (int j=0; j<peopleToRemoveSeasonFrom.size(); j++)
+			{
+				peopleToRemoveSeasonFrom.get(j).getTeamSeasons().remove(teamSeasonsForRemoving.get(i));
+			}
+		}
+		this.getTeams().remove(team.getID());
 	}
 	
 	/**

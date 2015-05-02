@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 
 
+
 //import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -23,6 +24,8 @@ import javax.swing.WindowConstants;
 
 
 
+
+import sports.Team;
 //import sports.Team;
 import sports.TeamSeason;
 import countryComponents.City;
@@ -71,23 +74,23 @@ public class SelectionView extends View {
 	//The contentPane's JScrollPanes and JLists
 	private JList<City> placesList= new JList<City>();
 	private JList<Person> peopleList=new JList<Person>();
-	private JList<TeamSeason> seasonList= new JList<TeamSeason>();
+	private JList<Team> teamList= new JList<Team>();
 	private JScrollPane placesScrollPane= new JScrollPane(placesList);
 	private JScrollPane peopleScrollPane= new JScrollPane(peopleList);
-	private JScrollPane teamsScrollPane=  new JScrollPane(seasonList);
+	private JScrollPane teamsScrollPane=  new JScrollPane(teamList);
 	
 	//The contentPane's buttons
 	private JButton addPlaceButton= new JButton("Add");
 	private JButton addPersonButton= new JButton("Add");
-	private JButton addSeasonButton= new JButton ("Add");
+	private JButton addTeamButton= new JButton ("Add");
 	
 	private JButton editPlaceButton= new JButton("Edit");
 	private JButton editPersonButton= new JButton("Edit");
-	private JButton editSeasonButton= new JButton ("Edit");
+	private JButton editTeamButton= new JButton ("Edit");
 	
 	private JButton deletePlaceButton= new JButton("Delete (Delete a city once to clear its contents, delete it again to remove it from the above list");
 	private JButton deletePersonButton= new JButton("Delete");
-	private JButton deleteSeasonButton= new JButton ("Delete");
+	private JButton deleteTeamButton= new JButton ("Delete");
 	
 	private JButton degreesOfSeparationButton= new JButton("Degrees of Separation");
 	
@@ -129,7 +132,7 @@ public class SelectionView extends View {
 		//Add titles to the columns for the frame
 		this.add(new JLabel("Places", SwingConstants.CENTER));
 		this.add(new JLabel("People", SwingConstants.CENTER));
-		this.add(new JLabel("Seasons", SwingConstants.CENTER));
+		this.add(new JLabel("Teams", SwingConstants.CENTER));
 		
 		//Add ScrollableLists to the Frame
 		this.add(placesScrollPane);
@@ -140,22 +143,22 @@ public class SelectionView extends View {
 		this.add(addPlaceButton);
 		this.add(addPersonButton);
 		addPersonButton.setEnabled(false);
-		this.add(addSeasonButton);
-		addSeasonButton.setEnabled(false);
+		this.add(addTeamButton);
+		addTeamButton.setEnabled(true);
 		
 		this.add(editPlaceButton);
 		editPlaceButton.setEnabled(false);
 		this.add(editPersonButton);
 		editPersonButton.setEnabled(false);
-		this.add(editSeasonButton);
-		editSeasonButton.setEnabled(false);
+		this.add(editTeamButton);
+		editTeamButton.setEnabled(false);
 		
 		this.add(deletePlaceButton);
 		deletePlaceButton.setEnabled(false);
 		this.add(deletePersonButton);
 		deletePersonButton.setEnabled(false);
-		this.add(deleteSeasonButton);
-		deleteSeasonButton.setEnabled(false);
+		this.add(deleteTeamButton);
+		deleteTeamButton.setEnabled(false);
 		
 		this.add(new JLabel());
 		this.add(degreesOfSeparationButton);
@@ -198,7 +201,7 @@ public class SelectionView extends View {
 	}
 	
 	public JButton getAddTeamButton(){
-		return addSeasonButton;
+		return addTeamButton;
 	}
 	
 	public JButton getEditPlaceButton(){
@@ -209,6 +212,10 @@ public class SelectionView extends View {
 		return editPersonButton;
 	}
 	
+	public JButton getEditTeamButton(){
+		return editTeamButton;
+	}
+	
 	public JButton getRemovePlaceButton()
 	{
 		return deletePlaceButton;
@@ -216,6 +223,10 @@ public class SelectionView extends View {
 	
 	public JButton getRemovePersonButton(){
 		return deletePersonButton;
+	}
+	
+	public JButton getRemoveTeamButton(){
+		return deleteTeamButton;
 	}
 	
 	public JButton getDegreesOfSeparationButton(){
@@ -247,9 +258,9 @@ public class SelectionView extends View {
 		{
 			updatePersonList();
 		}
-		if (countryModel!=null&&(/*e.getActionCommand()==Constants.TEAM_ADDED||*/e.getActionCommand()==Constants.SEASON_ADDED))
+		if (countryModel!=null&&(/*e.getActionCommand()==Constants.TEAM_ADDED||*/e.getActionCommand()==Constants.TEAM_ADDED))
 		{
-			updateSeasonList();
+			updateTeamList();
 		}
 	
 
@@ -281,9 +292,9 @@ public class SelectionView extends View {
 	 * Returns the currently selected seasons in the SelectionView
 	 * @return the currently selected seasons
 	 */
-	public ArrayList<TeamSeason> getSelectedSeasons()
+	public ArrayList<Team> getSelectedTeams()
 	{
-		return new ArrayList<TeamSeason>(seasonList.getSelectedValuesList());
+		return new ArrayList<Team>(teamList.getSelectedValuesList());
 	}
 	
 	/**
@@ -339,9 +350,19 @@ public class SelectionView extends View {
 	/**
 	 * Updates the JList of Seasons (teams)
 	 */
-	private void updateSeasonList()
+	private void updateTeamList()
 	{
-		seasonList.setListData(countryModel.getSportsStuff().getTeamSeasons().toArray(new TeamSeason[0]));
+		teamList.setListData(countryModel.getSportsStuff().getTeams().values().toArray(new Team[0]));
+		if(teamList.getModel().getSize()!=0)
+		{
+			editTeamButton.setEnabled(true);
+			deleteTeamButton.setEnabled(true);
+		}
+		else
+		{
+			editTeamButton.setEnabled(false);
+			deleteTeamButton.setEnabled(false);
+		}
 	}
 	
 	

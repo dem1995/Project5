@@ -16,6 +16,8 @@ import countryComponents.PersonList;
 import otherClasses.HelperMethods;
 import otherClasses.Pie;
 import sports.SportsStuff;
+import sports.SportsYear;
+import sports.Team;
 import sports.TeamSeason;
 /**
  * Project #4
@@ -39,6 +41,12 @@ public class TeamMateController {
 	private PersonEntryView personEntryView;
 	
 	private EditPersonView editPersonView;
+	
+	private YearSelectionView yearSelectionView;
+	
+	private SeasonEntryView seasonEntryView;
+	
+	private TeamEntryView teamEntryView;
 
 	
 	private ArrayList<DegreesOfSeparationListView> degreesOfSeparationListViews= new ArrayList<DegreesOfSeparationListView>();
@@ -209,10 +217,10 @@ public class TeamMateController {
     				}catch (Exception f){};
     				
 
-    					for (int i=0; i<selectionView.getSelectedSeasons().size(); i++)
+    					for (int i=0; i<selectionView.getSelectedTeams().size(); i++)
     					{
     						try{
-    							Pie pie=new Pie(selectionView.getSelectedSeasons().get(i));
+    							Pie pie=new Pie(selectionView.getSelectedTeams().get(i));
     							new PieChartView(pie);
     						}catch (Exception f){};
     					}
@@ -282,6 +290,15 @@ public class TeamMateController {
     			}
     		});
     		
+    		selectionView.getEditTeamButton().addActionListener(new ActionListener(){
+    			public void actionPerformed(ActionEvent e)
+    			{
+    				ArrayList<Team> selectedTeams= selectionView.getSelectedTeams();
+    				for (int i=0; i<selectedTeams.size(); i++)
+    					setSeasonEntryView(selectedTeams.get(i));
+    			}
+    		});
+    		
     		
     		selectionView.getRemovePlaceButton().addActionListener(new ActionListener(){
     			public void actionPerformed(ActionEvent e)
@@ -307,10 +324,20 @@ public class TeamMateController {
     		
     		selectionView.getAddTeamButton().addActionListener(new ActionListener(){
     			public void actionPerformed(ActionEvent e){
-    					//TODO Map Method
+    					setAddTeamView();
     			}
     		});
     		
+    		selectionView.getRemoveTeamButton().addActionListener(new ActionListener(){
+    			public void actionPerformed(ActionEvent e)
+    			{
+    				ArrayList<Team> selectedTeams=selectionView.getSelectedTeams();
+    				for (int i=0; i<selectedTeams.size(); i++)
+    				{
+    					countryModel.removeTeam(selectedTeams.get(i));
+    				}
+    			}
+    		});
     		selectionView.getDegreesOfSeparationButton().addActionListener(new ActionListener(){
     			public void actionPerformed(ActionEvent e){
     				prepareDegreesOfSeparationViews();
@@ -445,6 +472,61 @@ public class TeamMateController {
     			}catch (Exception f)
     			{
     				System.out.println("Changing the person failed");
+    			}
+    		}
+    	});
+    }
+    
+    public void setSeasonEntryView(Team team)
+    {
+    	ActionListener actionListener= new ActionListener(){
+    		public void actionPerformed(ActionEvent e)
+    		{
+    			seasonEntryView= new SeasonEntryView(team, yearSelectionView.getSelectedYears().get(0), countryModel);
+    			seasonEntryView.setModel(countryModel);
+    			yearSelectionView.setVisible(false);
+    			yearSelectionView.dispose();
+    			seasonEntryView.getEnterButton().addActionListener(new ActionListener(){
+    				public void actionPerformed(ActionEvent f)
+    				{
+    					countryModel.addTeamSeason(seasonEntryView.getTeamSeason());
+    					countryModel.forceUpdate();
+    					seasonEntryView.setVisible(false);
+    					seasonEntryView.dispose();
+    				//Get stuff from seasonEntryView and add it to the relevant team
+    				}
+    			});
+    		}
+    	};
+    	
+    	setYearSelectionView(team, actionListener);
+    	
+    }
+    
+    public void setYearSelectionView(Team team, ActionListener aL)
+    {
+    	ArrayList<SportsYear> sportsYears= new ArrayList<SportsYear>();
+    	yearSelectionView= new YearSelectionView(team, countryModel);
+    	yearSelectionView.setModel(countryModel);
+    	yearSelectionView.getEnterButton().addActionListener(aL);
+    }
+    
+    public void setAddTeamView()
+    {
+    	this.teamEntryView= new TeamEntryView();
+    	teamEntryView.setModel(countryModel);
+    	teamEntryView.getEnterButton().addActionListener(new ActionListener(){
+    		public void actionPerformed(ActionEvent e)
+    		{
+    			Team team=teamEntryView.getTeam();
+    			if(countryModel.getSportsStuff().getTeams().containsKey(team.getName()))
+    				JOptionPane.showMessageDialog(null, "Team with that name already in system");
+    			else
+    			{
+    				countryModel.addTeam(team);
+    				teamEntryView.setVisible(false);
+    				teamEntryView.dispose();
+    				setSeasonEntryView(team);
     			}
     		}
     	});
